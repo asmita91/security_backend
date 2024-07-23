@@ -1,4 +1,4 @@
-const { encrypt, decrypt } = require('../utilities/encryption');
+const { encrypt, decrypt } = require('../utility/encryption');
 const Cart = require('../models/Cart');
 const Product=require('../models/Product')
 const mongoose = require('mongoose');
