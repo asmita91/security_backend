@@ -1,0 +1,8 @@
+2024-08-13T13:33:55.047Z info: User: newuser@gmail.com, Role: user, URL: /cart/getCart/66bb5ef27568a1bbefe19e2c, Method: GET
+2024-08-13T13:33:55.096Z info: User: newuser@gmail.com, Role: user, URL: /cart/getCart/66bb5ef27568a1bbefe19e2c, Method: GET
+2024-08-13T13:34:08.918Z info: User: newuser@gmail.com, Role: user, URL: /cart/saveCart, Method: POST
+2024-08-13T13:34:08.965Z info: User: newuser@gmail.com, Role: user, URL: /cart/getCart/66bb5ef27568a1bbefe19e2c, Method: GET
+2024-08-13T13:37:46.650Z info: User: newuser@gmail.com, Role: user, URL: /products/reviews/66b349a854dcf45512d6cece, Method: POST
+2024-08-13T14:00:45.241Z info: User: admin@gmail.com, Role: admin, URL: /admin/product, Method: POST
+2024-08-13T14:01:04.493Z info: User: admin@gmail.com, Role: admin, URL: /admin/product/66bb670d13de8618e66610af, Method: DELETE
+2024-08-13T14:31:41.252Z info: User: admin@gmail.com, Role: admin, URL: /admin/product/66b34af154dcf45512d6cf0a, Method: PUT

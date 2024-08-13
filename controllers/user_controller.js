@@ -59,8 +59,8 @@ const userLogin = async (req, res, next) => {
         if (!isMatch) {
             user.failedAttempts += 1;
 
-            if (user.failedAttempts >= 10) {
-                user.lockUntil = Date.now() + 5 * 60 * 1000; // Lock for 2 minutes
+            if (user.failedAttempts >= 5) {
+                user.lockUntil = Date.now() + 5 * 60 * 1000; 
                 user.failedAttempts = 0; // Reset failed attempts
                 user.status = 'disable'; // Update status to disable
             }

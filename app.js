@@ -104,6 +104,7 @@ const cart_routes = require('./routes/cart_routes');
 const product_routes = require('./routes/product_routes');
 const productController = require('./controllers/product_controller');
 const upload_profile_routes = require('./routes/upload_profile_routes');
+const logRequest = require('./middlewares/logRequest');
 
 const { verifyAdmin, verifyUser } = require('./middlewares/auth');
 
@@ -119,6 +120,8 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan('tiny'));
 app.use(helmet());
+app.use(logRequest);
+
 
 const localDbUri = process.env.MONGODB_URI;
 
