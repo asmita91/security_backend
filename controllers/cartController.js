@@ -3,68 +3,22 @@ const Cart = require('../models/Cart');
 const Product=require('../models/Product')
 const mongoose = require('mongoose');
 
-// // Save Encrypted Cart Data
-// exports.saveCart = async (req, res) => {
-//   const { userId, productId, quantity } = req.body;
-//   try {
-//     // Fetch the current cart or create a new one
-//     let cart = await Cart.findOne({ userId });
-//     if (!cart) {
-//       cart = new Cart({ userId });
-//     }
-
-//     // Decrypt the current cart data to modify it
-//     const currentCartData = cart.encryptedCartData ? JSON.parse(decrypt(cart.encryptedCartData)) : [];
-
-//     // Check if the product is already in the cart
-//     const existingProductIndex = currentCartData.findIndex(item => item.productId.toString() === productId);
-
-//     if (existingProductIndex >= 0) {
-//       // If the product already exists in the cart, update the quantity
-//       currentCartData[existingProductIndex].quantity += quantity;
-//     } else {
-//       // Otherwise, add the new product to the cart
-//       currentCartData.push({ productId: mongoose.Types.ObjectId(productId), quantity });
-//     }
-
-//     // Encrypt the updated cart data and save it
-//     cart.encryptedCartData = encrypt(JSON.stringify(currentCartData));
-//     await cart.save();
-
-//     res.status(200).json({ message: 'Cart updated successfully' });
-//   } catch (error) {
-//     res.status(500).json({ error: 'Error saving cart data' });
-//   }
-// };
-
-
 exports.saveCart = async (req, res) => {
     const { userId, productId, quantity } = req.body;
     try {
-      // Fetch the current cart or create a new one
       let cart = await Cart.findOne({ userId });
       if (!cart) {
         cart = new Cart({ userId });
       }
-  
-      // Decrypt the current cart data to modify it
       const currentCartData = cart.encryptedCartData ? JSON.parse(decrypt(cart.encryptedCartData)) : [];
-  
-      // Check if the product is already in the cart
       const existingProductIndex = currentCartData.findIndex(item => item.productId.toString() === productId);
-  
       if (existingProductIndex >= 0) {
-        // If the product already exists in the cart, update the quantity
         currentCartData[existingProductIndex].quantity += quantity;
       } else {
-        // Otherwise, add the new product to the cart
         currentCartData.push({ productId: new mongoose.Types.ObjectId(productId), quantity });
     }
-  
-      // Encrypt the updated cart data and save it
       cart.encryptedCartData = encrypt(JSON.stringify(currentCartData));
       await cart.save();
-  
       res.status(200).json({ message: 'Cart updated successfully' });
     } catch (error) {
       console.error("Error saving cart data:", error);
@@ -79,11 +33,8 @@ exports.getCart = async (req, res) => {
       if (!cartRecord) {
         return res.status(404).json({ error: 'Cart not found' });
       }
-  
       const decryptedCart = JSON.parse(decrypt(cartRecord.encryptedCartData));
-  
-      // Populate product details based on productId references
-      const populatedCart = await Promise.all(
+        const populatedCart = await Promise.all(
         decryptedCart.map(async (item) => {
           const product = await Product.findById(item.productId).lean();
           return {
@@ -92,7 +43,6 @@ exports.getCart = async (req, res) => {
           };
         })
       );
-  
       res.status(200).json({ cart: populatedCart });
     } catch (error) {
         console.error('Error retrieving cart data:', error);
