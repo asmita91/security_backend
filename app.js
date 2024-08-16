@@ -24,16 +24,34 @@ app.use(express.static('public/'));
 // Middleware to decode data that come from browser and store in req.body
 app.use(express.json());
 
-// Remove CORS policy while using in browser
-app.use(cors());
+// // Remove CORS policy while using in browser
+// app.use(cors());
+
+app.use((req, res, next) => {
+    res.setHeader("Content-Security-Policy", 
+      "default-src 'self'; " + 
+      "script-src 'self' 'unsafe-eval'; " + 
+      "style-src 'self' 'unsafe-inline'; " + 
+      "img-src 'self' data:; " + 
+      "font-src 'self'; " + 
+      "connect-src 'self' ws://localhost:3000; " + 
+      "object-src 'none'; " + 
+      "frame-ancestors 'none'; " + 
+      "base-uri 'self'; " + 
+      "form-action 'self'; " + 
+      "upgrade-insecure-requests"
+    );
+    next();
+  });
+  
 
 
-// app.use(cors({
-//     origin: 'https://localhost:3000', 
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//     allowedHeaders: ['Content-Type', 'Authorization'],
-//     credentials: true, 
-//   }));
+app.use(cors({
+    origin: 'https://localhost:3000', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, 
+  }));
 app.use(morgan('tiny'));
 app.use(helmet());
 app.use(logRequest);
