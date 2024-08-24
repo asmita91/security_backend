@@ -47,7 +47,7 @@ app.use((req, res, next) => {
 
 
 app.use(cors({
-    origin: 'https://localhost:3000', 
+    origin: 'https://security-backend.vercel.app/', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true, 
